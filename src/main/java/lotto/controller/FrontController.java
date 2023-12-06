@@ -3,6 +3,8 @@ package lotto.controller;
 import lotto.domain.*;
 import lotto.dto.response.RankResultResponse;
 import lotto.dto.response.YieldResponse;
+import lotto.utils.mapper.RankResultResponseMapper;
+import lotto.utils.mapper.YieldResponseMapper;
 
 import java.util.List;
 
@@ -25,12 +27,7 @@ public class FrontController {
         WinningLotto winningLotto = winningLottoSetting();
         BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
 
-        RankResult rankResult = lottoSystem.createRankResult(winningLotto, bonusNumber, userLotto);
-        YieldResponse yieldResponse = lottoSystem.applyYield(rankResult);
-        RankResultResponse rankResultResponse = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
-
-        OUTPUT_VIEW.printStatistics(rankResultResponse, yieldResponse);
-
+        renderResult(userLotto, winningLotto, bonusNumber);
     }
 
     private Money moneySetting() {
@@ -42,7 +39,7 @@ public class FrontController {
     private BonusNumber bonusNumberSetting(WinningLotto winningLotto) {
         return ExceptionHandler.handle(() -> {
             int bonusNumber = INPUT_VIEW.readBonusNumber();
-            RUNTIME_VERIFIER.validate(winningLotto,bonusNumber);
+            RUNTIME_VERIFIER.validate(winningLotto, bonusNumber);
             return new BonusNumber(bonusNumber);
         });
     }
@@ -52,6 +49,15 @@ public class FrontController {
             List<Integer> lotto = INPUT_VIEW.readWinningLotto();
             return new WinningLotto(new Lotto(lotto));
         });
+    }
+
+    private void renderResult(UserLotto userLotto, WinningLotto winningLotto, BonusNumber bonusNumber) {
+        RankResult rankResult = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
+        Yield yield = lottoSystem.applyYield(rankResult);
+
+        RankResultResponse rankResultResponse = RankResultResponseMapper.of(rankResult);
+        YieldResponse yieldResponse = YieldResponseMapper.of(yield);
+        OUTPUT_VIEW.printStatistics(rankResultResponse, yieldResponse);
     }
 
 
