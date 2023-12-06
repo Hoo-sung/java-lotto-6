@@ -24,7 +24,7 @@ public class InputView {
     public String readWinningLotto() {
         System.out.println(WINNING_LOTTO_INPUT_MESSAGE);
         String winningLotto = Console.readLine();
-        //검증
+        //String이 유효한 형식인지 검증
         return winningLotto;
     }
 
