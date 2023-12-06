@@ -14,15 +14,29 @@ public class Lotto {
 
     private final List<Integer> numbers;
 
-    /** Lotto domain 검증 로직
+    /**
+     * Lotto domain 검증 로직
      * 1. 숫자가 6개인지
      * 2. 중복되지 않은 숫자들인지
      * 3. 각각이 1-9까지의 숫자들인지
+     * <p>
+     * Lotto는 숫자 오름차순으로 정렬해서 만듬.
      */
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
+        Collections.sort(numbers);
         this.numbers = numbers;
+    }
+
+    public int compareWithAnotherLotto(Lotto another) {
+        return (int) numbers.stream()
+                .filter(another::contains)
+                .count();
+    }
+
+    private boolean contains(int number) {
+        return numbers.contains(number);
     }
 
     public List<Integer> getNumbers() {
@@ -36,24 +50,24 @@ public class Lotto {
 
     }
 
-    private void validateLottoLength(List<Integer> numbers){
+    private void validateLottoLength(List<Integer> numbers) {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_LOTTO);
         }
     }
 
-    private void validateLottoNumberRange(List<Integer> numbers){
-        for(Integer number : numbers){
-            if(number< START_NUM || number > END_NUM){
+    private void validateLottoNumberRange(List<Integer> numbers) {
+        for (Integer number : numbers) {
+            if (number < START_NUM || number > END_NUM) {
                 throw new IllegalArgumentException(ExceptionMessage.INVALID_LOTTO);
             }
         }
     }
 
-    private void validateLottoNumberDistinct(List<Integer> numbers){
+    private void validateLottoNumberDistinct(List<Integer> numbers) {
         Set<Integer> uniqueNumbers = new HashSet<>();
-        for(Integer number : numbers){
-            if(!uniqueNumbers.add(number)){//중복된 숫자가 들어오면,
+        for (Integer number : numbers) {
+            if (!uniqueNumbers.add(number)) {//중복된 숫자가 들어오면,
                 throw new IllegalArgumentException(ExceptionMessage.INVALID_LOTTO);
             }
         }
