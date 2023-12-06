@@ -1,9 +1,6 @@
 package lotto.controller;
 
-import lotto.domain.BonusNumber;
-import lotto.domain.Lotto;
-import lotto.domain.UserLotto;
-import lotto.domain.WinningLotto;
+import lotto.domain.*;
 import lotto.utils.StringToLotto;
 
 
@@ -18,7 +15,7 @@ public class FrontController {
     }
 
     public void run() {
-        int money = moneySetting();
+        Money money = moneySetting();
         UserLotto userLotto = lottoSystem.applyUserLotto(money);
         BonusNumber bonusNumber = bonusNumberSetting();
         WinningLotto winningLotto = winningLottoSetting();
@@ -27,8 +24,10 @@ public class FrontController {
 
     }
 
-    private int moneySetting() {
-        return ExceptionHandler.handle(() -> INPUT_VIEW.readMoney());
+    private Money moneySetting() {
+        return ExceptionHandler.handle(() -> {
+            return new Money(INPUT_VIEW.readMoney());
+        });
     }
 
     private BonusNumber bonusNumberSetting() {

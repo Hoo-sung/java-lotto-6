@@ -1,6 +1,6 @@
 package lotto.view.verifier;
 
-public interface Verifier<T> {
+public interface Verifier {
 
-    public T validate(String input);
+    public void validate(String input);
 }

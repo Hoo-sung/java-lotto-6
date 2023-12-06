@@ -31,10 +31,10 @@ public class LottoSystem {
         return YieldResponseMapper.of(yieldService.createYield(rankResult));
     }
 
-    public UserLotto applyUserLotto(final int money){
+    public UserLotto applyUserLotto(final Money money) {
         LottoRepository userRepository = new LottoRepository(new ArrayList<>());
-        int number = money/1000;
-        for(int i=0;i<number;i++) {
+        int number = money.getMoney() / 1000;
+        for (int i = 0; i < number; i++) {
             List<Integer> lotto = RandomNumberGenerator.makeUniqueRandomList();
             userRepository.add(new Lotto(lotto));
         }
