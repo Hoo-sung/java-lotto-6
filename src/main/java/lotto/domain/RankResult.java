@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 public class RankResult {
 
@@ -16,8 +17,8 @@ public class RankResult {
 
     public int calculateEarnMoney() {
         int totalEarnMoney = 0;
-        for (Integer value : rankResult.values()) {
-            totalEarnMoney += value;
+        for (Map.Entry<Rank,Integer> component : rankResult.entrySet()) {
+            totalEarnMoney += (component.getKey().getWinningMoney() * component.getValue());
         }
         return totalEarnMoney;
     }

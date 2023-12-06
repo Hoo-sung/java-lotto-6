@@ -17,6 +17,10 @@ public enum Rank {
         this.winningMoney = winningMoney;
     }
 
+    public int getWinningMoney() {
+        return winningMoney;
+    }
+
     public static Rank makeRank(int grade, boolean containsBonusNumber){
         if(grade == FIRST.countOfMatch){
             return Rank.FIRST;

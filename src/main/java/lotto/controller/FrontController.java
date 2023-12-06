@@ -1,10 +1,13 @@
 package lotto.controller;
 
 import lotto.domain.*;
+import lotto.dto.response.RankResultResponse;
+import lotto.dto.response.YieldResponse;
 import lotto.utils.StringToLotto;
 
 
 import static lotto.view.InputView.INPUT_VIEW;
+import static lotto.view.OutputView.OUTPUT_VIEW;
 
 public class FrontController {
 
@@ -17,10 +20,15 @@ public class FrontController {
     public void run() {
         Money money = moneySetting();
         UserLotto userLotto = lottoSystem.applyUserLotto(money);
-        BonusNumber bonusNumber = bonusNumberSetting();
         WinningLotto winningLotto = winningLottoSetting();
+        BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
+        //Runtime Validate 해야함.
+        OUTPUT_VIEW.printUserLotto(userLotto);
+        RankResult rankResult = lottoSystem.createRankResult(winningLotto, bonusNumber, userLotto);
+        YieldResponse yieldResponse = lottoSystem.applyYield(rankResult);
+        RankResultResponse rankResultResponse = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
 
-
+        OUTPUT_VIEW.printStatistics(rankResultResponse,yieldResponse);
 
     }
 
@@ -30,7 +38,7 @@ public class FrontController {
         });
     }
 
-    private BonusNumber bonusNumberSetting() {
+    private BonusNumber bonusNumberSetting(WinningLotto winningLotto) {
         return ExceptionHandler.handle(() -> {
             int bonusNumber = INPUT_VIEW.readBonusNumber();
             return new BonusNumber(bonusNumber);

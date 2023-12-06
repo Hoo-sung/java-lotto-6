@@ -27,6 +27,10 @@ public class LottoSystem {
         return RankResultResponseMapper.of(rankService.calculateRank(winningLotto, bonusNumber, userLotto));
     }
 
+    public RankResult createRankResult(WinningLotto winningLotto, BonusNumber bonusNumber, UserLotto userLotto) {
+        return (rankService.calculateRank(winningLotto, bonusNumber, userLotto));
+    }
+
     public YieldResponse applyYield(RankResult rankResult) {
         return YieldResponseMapper.of(yieldService.createYield(rankResult));
     }
