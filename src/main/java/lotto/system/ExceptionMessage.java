@@ -5,4 +5,6 @@ public class ExceptionMessage {
     public final static String INVALID_LOTTO = "[ERROR] 올바르지 않은 로또 입니다. 다시 입력해 주세요";
     public final static String INVALID_BONUS_NUMBER = "[ERROR] 올바르지 않은 보너스 번호 입니다. 다시 입력해 주세요";
     public final static String INVALID_MONEY = "[ERROR] 올바르지 않은 구입 금액 입니다.";
+
+    public final static String RUNTIME_ERROR_MESSAGE = "[ERROR] 보너스 번호가 당첨 번호와 중복됩니다. 다시 입력해 주세요";
 }

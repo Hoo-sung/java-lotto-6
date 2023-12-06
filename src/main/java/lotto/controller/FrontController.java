@@ -8,6 +8,7 @@ import java.util.List;
 
 import static lotto.view.InputView.INPUT_VIEW;
 import static lotto.view.OutputView.OUTPUT_VIEW;
+import static lotto.view.verifier.RuntimeVerifier.RUNTIME_VERIFIER;
 
 public class FrontController {
 
@@ -22,13 +23,13 @@ public class FrontController {
         UserLotto userLotto = lottoSystem.applyUserLotto(money);
         OUTPUT_VIEW.printUserLotto(userLotto);
         WinningLotto winningLotto = winningLottoSetting();
-        BonusNumber bonusNumber = bonusNumberSetting();
-        //Runtime Validate 해야함.
+        BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
+
         RankResult rankResult = lottoSystem.createRankResult(winningLotto, bonusNumber, userLotto);
         YieldResponse yieldResponse = lottoSystem.applyYield(rankResult);
         RankResultResponse rankResultResponse = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
 
-        OUTPUT_VIEW.printStatistics(rankResultResponse,yieldResponse);
+        OUTPUT_VIEW.printStatistics(rankResultResponse, yieldResponse);
 
     }
 
@@ -38,9 +39,10 @@ public class FrontController {
         });
     }
 
-    private BonusNumber bonusNumberSetting() {
+    private BonusNumber bonusNumberSetting(WinningLotto winningLotto) {
         return ExceptionHandler.handle(() -> {
             int bonusNumber = INPUT_VIEW.readBonusNumber();
+            RUNTIME_VERIFIER.validate(winningLotto,bonusNumber);
             return new BonusNumber(bonusNumber);
         });
     }
