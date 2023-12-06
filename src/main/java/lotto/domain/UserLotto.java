@@ -11,14 +11,7 @@ public class UserLotto {
         this.userlottoRepository = lottoRepository;
     }
 
-    public List<Lotto> getUserLotto(){
+    public List<Lotto> getUserLotto() {
         return userlottoRepository.getLottoRepository();
-    }
-
-    public Lotto getIndexAt(int index){
-        return userlottoRepository.get(index);
-    }
-    public int size(){
-        return userlottoRepository.size();
     }
 }

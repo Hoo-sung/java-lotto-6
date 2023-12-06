@@ -34,12 +34,14 @@ public class LottoSystem {
     }
 
     public UserLotto applyUserLotto(final Money money) {
-        int numberOfLottos = money.getMoney() / MONEY_UNIT;
+        int numberOfLotto = money.getMoney() / MONEY_UNIT;
 
-        List<Lotto> lottos = IntStream.range(0, numberOfLottos)
-                .mapToObj(i -> new Lotto(RandomNumberGenerator.makeUniqueRandomList()))
-                .collect(Collectors.toList());
-        return new UserLotto(new LottoRepository(lottos));
+        LottoRepository lottoRepository = new LottoRepository();
+
+        IntStream.range(0, numberOfLotto)
+                .forEach(i -> lottoRepository.add(new Lotto(RandomNumberGenerator.makeUniqueRandomList())));
+
+        return new UserLotto(lottoRepository);
     }
 
 

@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import lotto.system.ExceptionMessage;
+import lotto.utils.RandomNumberGenerator;
 
 import java.util.Collections;
 import java.util.HashSet;
