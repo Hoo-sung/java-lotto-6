@@ -5,10 +5,6 @@ import lotto.domain.repository.LottoRepository;
 import lotto.domain.service.RankService;
 import lotto.domain.service.YieldService;
 import lotto.utils.RandomNumberGenerator;
-
-
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static lotto.system.Constant.MONEY_UNIT;

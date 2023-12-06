@@ -6,17 +6,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserLottoResponse {
-    private final List<Lotto> userLottos;
+    private final List<Lotto> userLotto;
 
-    public UserLottoResponse(List<Lotto> userLottos) {
-        this.userLottos = userLottos;
+    public UserLottoResponse(List<Lotto> userLotto) {
+        this.userLotto = userLotto;
     }
 
-    public List<Lotto> getUserLottos() {
-        return Collections.unmodifiableList(userLottos);
+    public List<Lotto> getUserLotto() {
+        return Collections.unmodifiableList(userLotto);
     }
 
     public int getSize(){
-        return userLottos.size();
+        return userLotto.size();
     }
 }
