@@ -17,4 +17,24 @@ public enum Rank {
         this.winningMoney = winningMoney;
     }
 
+    public static Rank makeRank(int grade, boolean containsBonusNumber){
+        if(grade == FIRST.countOfMatch){
+            return Rank.FIRST;
+        }
+        if(grade == SECOND.countOfMatch && containsBonusNumber){
+            return Rank.SECOND;
+        }
+        if(grade == THIRD.countOfMatch){
+            return Rank.THIRD;
+        }
+        if(grade == FOURTH.countOfMatch ){
+            return Rank.FOURTH;
+        }
+        if(grade == FIFTH.countOfMatch){
+            return Rank.FIFTH;
+        }
+
+        return Rank.MISS;
+    }
+
 }

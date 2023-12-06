@@ -2,6 +2,7 @@ package lotto.domain.repository;
 
 import lotto.domain.Lotto;
 
+import java.util.Collections;
 import java.util.List;
 
 public class LottoRepository {
@@ -18,6 +19,10 @@ public class LottoRepository {
 
     public void add(Lotto lotto) {
         lottoRepository.add(lotto);
+    }
+
+    public List<Lotto> getLottoRepository(){
+        return Collections.unmodifiableList(lottoRepository);
     }
 
     public Lotto get(int index) {
