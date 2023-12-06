@@ -2,8 +2,8 @@ package lotto.view;
 
 import lotto.domain.Lotto;
 import lotto.domain.Rank;
-import lotto.domain.UserLotto;
 import lotto.dto.response.RankResultResponse;
+import lotto.dto.response.UserLottoResponse;
 import lotto.dto.response.YieldResponse;
 import lotto.utils.FormattedYield;
 
@@ -19,9 +19,9 @@ public class OutputView {
 
     }
 
-    public void printUserLotto(UserLotto userLotto){
-        System.out.println(String.format(USER_LOTTO_START_MESSAGE, userLotto.size()));
-        for(Lotto lotto : userLotto.getUserLotto()){
+    public void printUserLotto(UserLottoResponse userLottoResponse){
+        System.out.println(String.format(USER_LOTTO_START_MESSAGE, userLottoResponse.getSize()));
+        for(Lotto lotto : userLottoResponse.getUserLottos()){
             System.out.println(lotto.toString());
         }
     }

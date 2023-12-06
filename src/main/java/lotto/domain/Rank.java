@@ -37,7 +37,6 @@ public enum Rank {
         if(grade == FIFTH.countOfMatch){
             return Rank.FIFTH;
         }
-
         return Rank.MISS;
     }
 

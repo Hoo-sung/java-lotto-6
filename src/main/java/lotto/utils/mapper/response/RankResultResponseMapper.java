@@ -1,4 +1,4 @@
-package lotto.utils.mapper;
+package lotto.utils.mapper.response;
 
 import lotto.domain.RankResult;
 import lotto.dto.response.RankResultResponse;

@@ -1,4 +1,4 @@
-package lotto.utils.mapper;
+package lotto.utils.mapper.response;
 
 import lotto.domain.Yield;
 import lotto.dto.response.YieldResponse;

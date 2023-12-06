@@ -2,9 +2,11 @@ package lotto.controller;
 
 import lotto.domain.*;
 import lotto.dto.response.RankResultResponse;
+import lotto.dto.response.UserLottoResponse;
 import lotto.dto.response.YieldResponse;
-import lotto.utils.mapper.RankResultResponseMapper;
-import lotto.utils.mapper.YieldResponseMapper;
+import lotto.utils.mapper.response.RankResultResponseMapper;
+import lotto.utils.mapper.response.UserLottoResponseMapper;
+import lotto.utils.mapper.response.YieldResponseMapper;
 
 import java.util.List;
 
@@ -23,7 +25,9 @@ public class FrontController {
     public void run() {
         Money money = moneySetting();
         UserLotto userLotto = lottoSystem.applyUserLotto(money);
-        OUTPUT_VIEW.printUserLotto(userLotto);
+        UserLottoResponse userLottoResponse = UserLottoResponseMapper.of(userLotto);
+        OUTPUT_VIEW.printUserLotto(userLottoResponse);
+
         WinningLotto winningLotto = winningLottoSetting();
         BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
 
@@ -31,9 +35,7 @@ public class FrontController {
     }
 
     private Money moneySetting() {
-        return ExceptionHandler.handle(() -> {
-            return new Money(INPUT_VIEW.readMoney());
-        });
+        return ExceptionHandler.handle(() -> new Money(INPUT_VIEW.readMoney()));
     }
 
     private BonusNumber bonusNumberSetting(WinningLotto winningLotto) {
