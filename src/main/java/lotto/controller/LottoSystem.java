@@ -9,6 +9,10 @@ import lotto.utils.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static lotto.system.Constant.MONEY_UNIT;
 
 
 public class LottoSystem {
@@ -22,7 +26,7 @@ public class LottoSystem {
     }
 
     public RankResult applyRank(final WinningLotto winningLotto, final BonusNumber bonusNumber,
-                                        final UserLotto userLotto) {
+                                final UserLotto userLotto) {
         return rankService.calculateRank(winningLotto, bonusNumber, userLotto);
     }
 
@@ -31,15 +35,13 @@ public class LottoSystem {
     }
 
     public UserLotto applyUserLotto(final Money money) {
-        LottoRepository userRepository = new LottoRepository(new ArrayList<>());
-        int number = money.getMoney() / 1000;
-        for (int i = 0; i < number; i++) {
-            List<Integer> lotto = RandomNumberGenerator.makeUniqueRandomList();
-            userRepository.add(new Lotto(lotto));
-        }
-        return new UserLotto(userRepository);
-    }
+        int numberOfLottos = money.getMoney() / MONEY_UNIT;
 
+        List<Lotto> lottos = IntStream.range(0, numberOfLottos)
+                .mapToObj(i -> new Lotto(RandomNumberGenerator.makeUniqueRandomList()))
+                .collect(Collectors.toList());
+        return new UserLotto(new LottoRepository(lottos));
+    }
 
 
 }
