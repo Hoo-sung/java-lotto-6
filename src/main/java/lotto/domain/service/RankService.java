@@ -6,13 +6,13 @@ import java.util.EnumMap;
 
 public class RankService {
 
-    public EnumMap<Rank,Integer> calculateRank(WinningLotto winningLotto , BonusNumber bonusNumber, UserLotto userLotto){
+    public RankResult calculateRank(WinningLotto winningLotto , BonusNumber bonusNumber, UserLotto userLotto){
         EnumMap<Rank, Integer> createMap = createMap();
         for(Lotto lotto : userLotto.getUserLotto()){
             Rank rank = calculateLottoRank(winningLotto, bonusNumber, lotto);
             createMap.put(rank, createMap.get(rank) + 1);
         }
-        return createMap;
+        return new RankResult(createMap);
     }
 
     private Rank calculateLottoRank(WinningLotto winningLotto, BonusNumber bonusNumber, Lotto lotto){
