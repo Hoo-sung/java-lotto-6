@@ -25,7 +25,7 @@ public class Lotto {
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
-        Collections.sort(numbers);
+//        Collections.sort(numbers);
         this.numbers = numbers;
     }
 
@@ -71,5 +71,10 @@ public class Lotto {
                 throw new IllegalArgumentException(ExceptionMessage.INVALID_LOTTO);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return numbers.toString();
     }
 }

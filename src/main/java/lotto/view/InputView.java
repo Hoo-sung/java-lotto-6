@@ -1,6 +1,7 @@
 package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import lotto.view.verifier.MoneyVerifier;
 
 public class InputView {
 
@@ -10,6 +11,8 @@ public class InputView {
 
     public static InputView INPUT_VIEW = new InputView();
 
+    private final MoneyVerifier moneyVerifier = new MoneyVerifier();
+
     private InputView() {
 
     }
@@ -17,7 +20,7 @@ public class InputView {
     public int readMoney() {
         System.out.println(MONEY_INPUT_MESSAGE);
         String money = Console.readLine();
-        //검증
+        moneyVerifier.validate(money);
         return Integer.parseInt(money);
     }
 

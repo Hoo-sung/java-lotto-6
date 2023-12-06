@@ -18,20 +18,24 @@ public class LottoSystem {
     private final RankService rankService;
     private final YieldService yieldService;
 
-    public LottoSystem(RankService rankService, YieldService yieldService) {
+    public LottoSystem(final RankService rankService, final YieldService yieldService) {
         this.rankService = rankService;
         this.yieldService = yieldService;
     }
 
-    public RankResultResponse applyRank(WinningLotto winningLotto, BonusNumber bonusNumber, UserLotto userLotto) {
+    public RankResultResponse applyRank(final WinningLotto winningLotto, final BonusNumber bonusNumber,
+                                        final UserLotto userLotto) {
+
         return RankResultResponseMapper.of(rankService.calculateRank(winningLotto, bonusNumber, userLotto));
     }
 
-    public RankResult createRankResult(WinningLotto winningLotto, BonusNumber bonusNumber, UserLotto userLotto) {
+    public RankResult createRankResult(final WinningLotto winningLotto, final BonusNumber bonusNumber,
+                                       final UserLotto userLotto) {
+
         return (rankService.calculateRank(winningLotto, bonusNumber, userLotto));
     }
 
-    public YieldResponse applyYield(RankResult rankResult) {
+    public YieldResponse applyYield(final RankResult rankResult) {
         return YieldResponseMapper.of(yieldService.createYield(rankResult));
     }
 

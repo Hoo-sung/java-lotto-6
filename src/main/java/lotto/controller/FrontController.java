@@ -20,10 +20,11 @@ public class FrontController {
     public void run() {
         Money money = moneySetting();
         UserLotto userLotto = lottoSystem.applyUserLotto(money);
+        OUTPUT_VIEW.printUserLotto(userLotto);
         WinningLotto winningLotto = winningLottoSetting();
         BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
         //Runtime Validate 해야함.
-        OUTPUT_VIEW.printUserLotto(userLotto);
+
         RankResult rankResult = lottoSystem.createRankResult(winningLotto, bonusNumber, userLotto);
         YieldResponse yieldResponse = lottoSystem.applyYield(rankResult);
         RankResultResponse rankResultResponse = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
