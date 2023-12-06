@@ -3,8 +3,8 @@ package lotto.controller;
 import lotto.domain.*;
 import lotto.dto.response.RankResultResponse;
 import lotto.dto.response.YieldResponse;
-import lotto.utils.StringToLotto;
 
+import java.util.List;
 
 import static lotto.view.InputView.INPUT_VIEW;
 import static lotto.view.OutputView.OUTPUT_VIEW;
@@ -22,9 +22,8 @@ public class FrontController {
         UserLotto userLotto = lottoSystem.applyUserLotto(money);
         OUTPUT_VIEW.printUserLotto(userLotto);
         WinningLotto winningLotto = winningLottoSetting();
-        BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
+        BonusNumber bonusNumber = bonusNumberSetting();
         //Runtime Validate 해야함.
-
         RankResult rankResult = lottoSystem.createRankResult(winningLotto, bonusNumber, userLotto);
         YieldResponse yieldResponse = lottoSystem.applyYield(rankResult);
         RankResultResponse rankResultResponse = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
@@ -39,7 +38,7 @@ public class FrontController {
         });
     }
 
-    private BonusNumber bonusNumberSetting(WinningLotto winningLotto) {
+    private BonusNumber bonusNumberSetting() {
         return ExceptionHandler.handle(() -> {
             int bonusNumber = INPUT_VIEW.readBonusNumber();
             return new BonusNumber(bonusNumber);
@@ -48,9 +47,8 @@ public class FrontController {
 
     private WinningLotto winningLottoSetting() {
         return ExceptionHandler.handle(() -> {
-            String winningLotto = INPUT_VIEW.readWinningLotto();
-            Lotto lotto = StringToLotto.convertToLotto(winningLotto);
-            return new WinningLotto(lotto);
+            List<Integer> lotto = INPUT_VIEW.readWinningLotto();
+            return new WinningLotto(new Lotto(lotto));
         });
     }
 

@@ -1,7 +1,11 @@
 package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import lotto.utils.LottoConverter;
+import lotto.view.verifier.LottoVerifier;
 import lotto.view.verifier.MoneyVerifier;
+
+import java.util.List;
 
 public class InputView {
 
@@ -12,6 +16,8 @@ public class InputView {
     public static InputView INPUT_VIEW = new InputView();
 
     private final MoneyVerifier moneyVerifier = new MoneyVerifier();
+
+    private final LottoVerifier lottoVerifier = new LottoVerifier();
 
     private InputView() {
 
@@ -24,11 +30,11 @@ public class InputView {
         return Integer.parseInt(money);
     }
 
-    public String readWinningLotto() {
+    public List<Integer> readWinningLotto() {
         System.out.println(WINNING_LOTTO_INPUT_MESSAGE);
         String winningLotto = Console.readLine();
-        //String이 유효한 형식인지 검증
-        return winningLotto;
+        lottoVerifier.validate(winningLotto);
+        return LottoConverter.convertStringToNumbers(winningLotto);
     }
 
     public int readBonusNumber() {
