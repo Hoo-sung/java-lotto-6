@@ -4,7 +4,11 @@ import lotto.domain.*;
 import lotto.domain.repository.LottoRepository;
 import lotto.domain.service.RankService;
 import lotto.domain.service.YieldService;
+import lotto.dto.request.BonusNumberRequest;
+import lotto.dto.request.MoneyRequest;
+import lotto.dto.request.WinningLottoRequest;
 import lotto.utils.RandomNumberGenerator;
+
 import java.util.stream.IntStream;
 
 import static lotto.system.Constant.MONEY_UNIT;
@@ -20,17 +24,17 @@ public class LottoSystem {
         this.yieldService = yieldService;
     }
 
-    public RankResult applyRank(final WinningLotto winningLotto, final BonusNumber bonusNumber,
-                                final UserLotto userLotto) {
-        return rankService.calculateRank(winningLotto, bonusNumber, userLotto);
+    public RankResult applyRank(final WinningLottoRequest winningLottoRequest, final BonusNumberRequest bonusNumberRequest,
+                                        final UserLotto userLotto) {
+        return rankService.calculateRank(winningLottoRequest, bonusNumberRequest, userLotto);
     }
 
     public Yield applyYield(final RankResult rankResult) {
-        return new Yield(yieldService.createYield(rankResult));
+        return yieldService.createYield(rankResult);
     }
 
-    public UserLotto applyUserLotto(final Money money) {
-        int numberOfLotto = money.getMoney() / MONEY_UNIT;
+    public UserLotto createUserLotto(final MoneyRequest moneyRequest) {
+        int numberOfLotto = moneyRequest.getMoney() / MONEY_UNIT;
 
         LottoRepository lottoRepository = new LottoRepository();
 
@@ -39,6 +43,5 @@ public class LottoSystem {
 
         return new UserLotto(lottoRepository);
     }
-
 
 }

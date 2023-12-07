@@ -1,12 +1,14 @@
 package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import lotto.utils.LottoConverter;
+import lotto.utils.Util;
 import lotto.view.verifier.BonusNumberVerifier;
 import lotto.view.verifier.LottoVerifier;
 import lotto.view.verifier.MoneyVerifier;
 
 import java.util.List;
+
+import static lotto.utils.Util.*;
 
 public class InputView {
 
@@ -35,7 +37,7 @@ public class InputView {
         System.out.println(WINNING_LOTTO_INPUT_MESSAGE);
         String winningLotto = Console.readLine();
         lottoVerifier.validate(winningLotto);
-        return LottoConverter.convertStringToNumbers(winningLotto);
+        return convertStringToNumbers(winningLotto);
     }
 
     public int readBonusNumber() {

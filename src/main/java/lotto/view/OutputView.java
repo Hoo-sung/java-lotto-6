@@ -5,7 +5,9 @@ import lotto.domain.Rank;
 import lotto.dto.response.RankResultResponse;
 import lotto.dto.response.UserLottoResponse;
 import lotto.dto.response.YieldResponse;
-import lotto.utils.FormattedYield;
+import lotto.utils.Util;
+
+import static lotto.utils.Util.*;
 
 public class OutputView {
 
@@ -33,7 +35,7 @@ public class OutputView {
         System.out.println("5개 일치 (1,500,000원) - " + rankResultResponse.getNumberOfRank(Rank.THIRD) + PRIZE_UNIT);
         System.out.println("5개 일치, 보너스 볼 일치 (30,000,000원) - " + rankResultResponse.getNumberOfRank(Rank.SECOND) + PRIZE_UNIT);
         System.out.println("6개 일치 (2,000,000,000원) - " + rankResultResponse.getNumberOfRank(Rank.FIRST) + PRIZE_UNIT);
-        System.out.println("총 수익률은 " + FormattedYield.makeFloatFormattedYield(yieldResponse.getYield(), 1) + "%입니다.");
+        System.out.println("총 수익률은 " + makeFloatFormattedYield(yieldResponse.getYield(), 1) + "%입니다.");
     }
 
 }

@@ -1,14 +1,19 @@
 package lotto.controller;
 
 import lotto.domain.*;
+import lotto.dto.request.BonusNumberRequest;
+import lotto.dto.request.MoneyRequest;
+import lotto.dto.request.WinningLottoRequest;
 import lotto.dto.response.RankResultResponse;
 import lotto.dto.response.UserLottoResponse;
 import lotto.dto.response.YieldResponse;
+import lotto.utils.mapper.request.BonusNumberRequestMapper;
+import lotto.utils.mapper.request.MoneyRequestMapper;
+import lotto.utils.mapper.request.WinningLottoRequestMapper;
 import lotto.utils.mapper.response.RankResultResponseMapper;
 import lotto.utils.mapper.response.UserLottoResponseMapper;
 import lotto.utils.mapper.response.YieldResponseMapper;
 
-import java.util.List;
 
 import static lotto.view.InputView.INPUT_VIEW;
 import static lotto.view.OutputView.OUTPUT_VIEW;
@@ -23,38 +28,37 @@ public class FrontController {
     }
 
     public void run() {
-        Money money = moneySetting();
-        UserLotto userLotto = lottoSystem.applyUserLotto(money);
+        MoneyRequest moneyRequest = createMoneyRequest();
+        UserLotto userLotto = lottoSystem.createUserLotto(moneyRequest);
         UserLottoResponse userLottoResponse = UserLottoResponseMapper.of(userLotto);
         OUTPUT_VIEW.printUserLotto(userLottoResponse);
 
-        WinningLotto winningLotto = winningLottoSetting();
-        BonusNumber bonusNumber = bonusNumberSetting(winningLotto);
+        WinningLottoRequest winningLottoRequest = createWinningLottoRequest();
+        BonusNumberRequest bonusNumberRequest = createBonusNumberRequest(winningLottoRequest);
 
-        renderResult(userLotto, winningLotto, bonusNumber);
+        renderResult(winningLottoRequest, bonusNumberRequest, userLotto);
+
     }
 
-    private Money moneySetting() {
-        return ExceptionHandler.handle(() -> new Money(INPUT_VIEW.readMoney()));
+    private MoneyRequest createMoneyRequest() {
+        return ExceptionHandler.handle(() -> MoneyRequestMapper.of(INPUT_VIEW.readMoney()));
     }
 
-    private BonusNumber bonusNumberSetting(WinningLotto winningLotto) {
+    private WinningLottoRequest createWinningLottoRequest() {
+        return ExceptionHandler.handle(() -> WinningLottoRequestMapper.of(INPUT_VIEW.readWinningLotto()));
+    }
+
+    private BonusNumberRequest createBonusNumberRequest(WinningLottoRequest winningLottoRequest) {
         return ExceptionHandler.handle(() -> {
             int bonusNumber = INPUT_VIEW.readBonusNumber();
-            RUNTIME_VERIFIER.validate(winningLotto, bonusNumber);
-            return new BonusNumber(bonusNumber);
+            BonusNumberRequest bonusNumberRequest = BonusNumberRequestMapper.of(bonusNumber);
+            RUNTIME_VERIFIER.validate(winningLottoRequest,bonusNumberRequest);
+            return bonusNumberRequest;
         });
     }
 
-    private WinningLotto winningLottoSetting() {
-        return ExceptionHandler.handle(() -> {
-            List<Integer> lotto = INPUT_VIEW.readWinningLotto();
-            return new WinningLotto(new Lotto(lotto));
-        });
-    }
-
-    private void renderResult(UserLotto userLotto, WinningLotto winningLotto, BonusNumber bonusNumber) {
-        RankResult rankResult = lottoSystem.applyRank(winningLotto, bonusNumber, userLotto);
+    private void renderResult(WinningLottoRequest winningLottoRequest, BonusNumberRequest bonusNumberRequest, UserLotto userLotto) {
+        RankResult rankResult = lottoSystem.applyRank(winningLottoRequest, bonusNumberRequest, userLotto);
         Yield yield = lottoSystem.applyYield(rankResult);
 
         RankResultResponse rankResultResponse = RankResultResponseMapper.of(rankResult);

@@ -9,10 +9,6 @@ public class WinningLotto {
         this.winningLotto = winningNumbers;
     }
 
-    public Lotto getWinningLotto() {
-        return winningLotto;
-    }
-
     public int grade(Lotto lotto){
         return winningLotto.compareWithAnotherLotto(lotto);
     }

@@ -1,23 +1,27 @@
 package lotto.domain.service;
 
 import lotto.domain.*;
+import lotto.dto.request.BonusNumberRequest;
+import lotto.dto.request.WinningLottoRequest;
 
 import java.util.EnumMap;
 
 public class RankService {
 
-    public RankResult calculateRank(WinningLotto winningLotto , BonusNumber bonusNumber, UserLotto userLotto){
+    public RankResult calculateRank(WinningLottoRequest winningLottoRequest , BonusNumberRequest bonusNumberRequest, UserLotto userLotto){
         EnumMap<Rank, Integer> createMap = createMap();
         for(Lotto lotto : userLotto.getUserLotto()){
-            Rank rank = calculateLottoRank(winningLotto, bonusNumber, lotto);
+            Rank rank = calculateLottoRank(winningLottoRequest, bonusNumberRequest, lotto);
             createMap.put(rank, createMap.get(rank) + 1);
         }
         return new RankResult(createMap);
     }
 
-    private Rank calculateLottoRank(WinningLotto winningLotto, BonusNumber bonusNumber, Lotto lotto){
+    private Rank calculateLottoRank(WinningLottoRequest winningLottoRequest , BonusNumberRequest bonusNumberRequest, Lotto lotto){
+
+        WinningLotto winningLotto = new WinningLotto(winningLottoRequest.getWinningLotto());
         int grade = winningLotto.grade(lotto);
-        boolean contains = lotto.contains(bonusNumber.getBonusNumber());
+        boolean contains = lotto.contains(bonusNumberRequest.getBonusNumber());
         return Rank.makeRank(grade,contains);
     }
 
