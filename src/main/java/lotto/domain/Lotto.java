@@ -1,8 +1,6 @@
 package lotto.domain;
 
 import lotto.system.ExceptionMessage;
-import lotto.utils.RandomNumberGenerator;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -70,7 +68,7 @@ public class Lotto {
     private void validateLottoNumberDistinct(List<Integer> numbers) {
         Set<Integer> uniqueNumbers = new HashSet<>();
         for (Integer number : numbers) {
-            if (!uniqueNumbers.add(number)) {//중복된 숫자가 들어오면,
+            if (!uniqueNumbers.add(number)) {
                 throw new IllegalArgumentException(ExceptionMessage.INVALID_LOTTO);
             }
         }

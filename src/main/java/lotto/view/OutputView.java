@@ -5,7 +5,6 @@ import lotto.domain.Rank;
 import lotto.dto.response.RankResultResponse;
 import lotto.dto.response.UserLottoResponse;
 import lotto.dto.response.YieldResponse;
-import lotto.utils.Util;
 
 import static lotto.utils.Util.*;
 

@@ -18,12 +18,8 @@ public class LottoRepository {
         lottoRepository.add(lotto);
     }
 
-    public List<Lotto> getLottoRepository(){
+    public List<Lotto> getLottoRepository() {
         return Collections.unmodifiableList(lottoRepository);
-    }
-
-    public Lotto get(int index) {
-        return lottoRepository.get(index);
     }
 
     public int size() {

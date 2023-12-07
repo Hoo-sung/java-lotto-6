@@ -18,18 +18,18 @@ public class Money {
         this.money = money;
     }
 
-    private void validate(int money){
+    private void validate(int money) {
         validateMoneyRange(money);
         validateDividable(money);
     }
 
-    private void validateMoneyRange(int money){
-        if(money<=0)
+    private void validateMoneyRange(int money) {
+        if (money <= 0)
             throw new IllegalArgumentException(IS_NOT_VALID_RANGE);
     }
 
-    private void validateDividable(int money){
-        if(money % MONEY_UNIT !=0){
+    private void validateDividable(int money) {
+        if (money % MONEY_UNIT != 0) {
             throw new IllegalArgumentException(IS_NOT_DIVIDABLE);
         }
     }

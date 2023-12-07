@@ -1,7 +1,6 @@
 package lotto.dto.response;
 
 import lotto.domain.Lotto;
-
 import java.util.Collections;
 import java.util.List;
 
