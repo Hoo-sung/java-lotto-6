@@ -18,7 +18,7 @@ public class RankResult {
     public int calculateEarnMoney() {
         int totalEarnMoney = 0;
         for (Map.Entry<Rank,Integer> component : rankResult.entrySet()) {
-            totalEarnMoney += (component.getKey().getWinningMoney() * component.getValue());
+            totalEarnMoney += (component.getKey().getReward() * component.getValue());
         }
         return totalEarnMoney;
     }
